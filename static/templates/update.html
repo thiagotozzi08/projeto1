@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{{{{ url_for('static', filename='style/getit.css') }}}}">
+<meta charset="UTF-8">
+<title>Editar nota</title>
+</head>
+<body>
+
+<form action="/update" method="POST">
+    <input type="hidden" name="id" value="{id}" />
+    <label for="titulo">Título</label>
+    <input id="titulo" type="text" name="titulo" value="{title}" />
+    <label for="detalhes">Detalhes</label>
+    <input id="detalhes" name="detalhes" value="{content}" />
+    <input type="submit" name="save_button" value="Salvar" />
+    <a href="/">Cancelar</a>
+</form>
+
+</body>
+</html>

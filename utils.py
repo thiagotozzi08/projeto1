@@ -25,3 +25,10 @@ def add_note(title, content):
     cursor.execute("INSERT INTO note (title, content) VALUES (?, ?)", (title, content))
     conn.commit()
     conn.close()
+
+def delete_note(id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM note WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()

@@ -1,10 +1,4 @@
-import json
-
-def load_data(nome_arquivo):
-    caminho = f"static/data/{nome_arquivo}"
-    with open(caminho, "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
-    return dados
+import sqlite3
 
 def load_template(nome_arquivo):
     caminho = f"static/templates/{nome_arquivo}"
@@ -12,7 +6,22 @@ def load_template(nome_arquivo):
         conteudo = arquivo.read()
     return conteudo
 
-def save_data(nome_arquivo, dados):
-    caminho = f"static/data/{nome_arquivo}"
-    with open(caminho, "w", encoding="utf-8") as arquivo:
-        json.dump(dados, arquivo, ensure_ascii=False, indent=4)
+def get_connection():
+    conn = sqlite3.connect('banco.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_notes():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM note")
+    notas = cursor.fetchall()
+    conn.close()
+    return notas
+
+def add_note(title, content):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO note (title, content) VALUES (?, ?)", (title, content))
+    conn.commit()
+    conn.close()
